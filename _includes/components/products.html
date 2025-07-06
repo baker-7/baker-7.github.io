@@ -1,0 +1,147 @@
+<section class="product-category" id="croissants">
+    <h2>Croissants</h2>
+    <div class="scroll-progress"></div>
+    <div id="croissant-gallery" class="scroll-carousel">
+        {% for item in site.data.products.croissants %}
+        <div class="carousel-card">
+            <a href="{{ item.image | relative_url }}"
+                style="text-decoration: none;"
+            >
+            <img src="{{ item.image }}"
+                alt="{{ item.name }}" loading="lazy">
+            </a>
+            <a href="" style="text-decoration: none;"><p>{{ item.name }}</p></a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="product-category" id="cookies">
+    <h2>Cookies</h2>
+    <div class="scroll-progress"></div>
+    <div class="scroll-carousel">
+        {% for item in site.data.products.cookies %}
+        <div class="carousel-card">
+            <img src="{{ item.image }}" alt="{{ item.name }}">
+            <p>{{ item.name }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="product-category" id="breads">
+    <h2>Bread Loafs</h2>
+    <div class="scroll-progress"></div>
+    <div class="scroll-carousel">
+        {% for item in site.data.products.breads %}
+        <div class="carousel-card">
+            <img src="{{ item.image }}" alt="{{ item.name }}">
+            <p>{{ item.name }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+
+    .product-category h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--dark-color);
+        text-align: center;
+    }
+
+    .scroll-carousel {
+        display: flex;
+        gap: 1rem;
+        overflow-x: auto;
+        padding-bottom: 1rem;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        align-items: center;
+        /* justify-content: center; */
+        /* scroll-padding-left: 1rem; */
+    }
+
+    .scroll-carousel::-webkit-scrollbar {
+        display: none;
+    }
+
+    .carousel-card {
+        flex: 0 0 auto;
+        width: 330px;
+        /* width: 100%; */
+        /* height: 180px; */
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        scroll-snap-align: start;
+        padding: .61rem;
+    }
+
+    .carousel-card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+    }
+
+    .carousel-card p {
+        font-family: 'Special Elite';
+        margin: 0;
+        font-size: 1rem;
+        color: var(--dark-color);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .scroll-carousel:has(.carousel-card:nth-child(1)) .carousel-card {
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+        animation-delay: calc(var(--i) * 150ms);
+    }
+
+    .carousel-card {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s ease-out forwards;
+        animation-delay: 0.2s;
+    }
+
+
+    .scroll-progress {
+        height: 4px;
+        background: linear-gradient(to right, #fdd835 0%, #212121 100%);
+        width: 0%;
+        transition: width 0.3s ease;
+        border-radius: 2px;
+        margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+
+        .scroll-carousel {
+            justify-content: unset;
+        }
+        .carousel-card {
+            width: 230px;
+            img {
+                height: 180px;
+            }
+        }
+    }
+</style>

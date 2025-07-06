@@ -1,0 +1,22 @@
+title: Baker 7
+email: contactbaker7@gmail.com
+description: >
+  Home-baked goods made with love. Featuring croissants, cookies, and handcrafted treats.
+baseurl: "" # e.g. /blog
+url: "" # Your site domain
+logo: /assets/icons/logo192.png
+
+# Build settings
+theme: null
+plugins: []
+markdown: kramdown
+
+# Excludes
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Permalinks
+permalink: pretty

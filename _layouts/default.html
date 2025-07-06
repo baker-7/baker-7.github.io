@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ page.title }} | Baker 7</title>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/assets/icons/site.webmanifest" />
+    
+    <!-- Add in <head> -->
+    <!-- Head -->
+    <!-- In <head> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+    <!-- Before </body> -->
+    
+    
+    <meta name="theme-color" content="#fdd835" />
+  </head>
+  <body>
+    {% include header.html %}
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil&family=Cinzel+Decorative&family=Cormorant+Garamond&family=Special+Elite&family=Rock+Salt&display=swap" rel="stylesheet">
+
+    <main>
+      {{ content }}
+    </main>
+    
+    {% include footer.html %}
+    <script src="/assets/js/script.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+
+  </body>
+</html>

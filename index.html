@@ -1,0 +1,32 @@
+---
+layout: default
+title: Home
+---
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h1>Freshly Baked Delights</h1>
+    <p>Home-baked excellence crafted with care, precision, and passion. Explore a delicious world of artisanal breads, cookies, croissants, and more.</p>
+    <a href="#products" class="btn">Explore Our Bakes</a>
+  </div>
+</section>
+
+{% include components/products.html %}
+
+<section class="about" id="about">
+  <h2>Our Story</h2>
+  <p>At Baker 7, baking is more than a skill — it’s a heartfelt tradition. From our humble beginnings to a neighborhood favorite, we’ve remained committed to quality, creativity, and a personal touch in every product we bake.</p>
+</section>
+
+
+
+<section class="contact" id="contact">
+  <h2>Contact Us</h2>
+  <p>Want to place an order or know more about our offerings? Drop us a message!</p>
+  <form id="contactForm">
+    <input type="text" placeholder="Your Name" required />
+    <input type="email" placeholder="Your Email" required />
+    <textarea placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
