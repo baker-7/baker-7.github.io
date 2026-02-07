@@ -1,32 +1,745 @@
----
-layout: default
-title: Home
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta basics -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baker7 – Artisanal French Bakery</title>
 
-<section class="hero" id="home">
-  <div class="hero-content">
-    <h1>Freshly Baked Delights</h1>
-    <p>Home-baked excellence crafted with care, precision, and passion. Explore a delicious world of artisanal breads, cookies, croissants, and more.</p>
-    <a href="#products" class="btn">Explore Our Bakes</a>
+  <!-- Google Fonts: Playfair Display + Great Vibes [web:9][web:12] -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- [web:6] -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- [web:6] -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet"> <!-- [web:9][web:12] -->
+
+  <style>
+    /* ----------
+       Base layout & parchment look
+       ---------- */
+
+    :root {
+      --bg-parchment: #f5f0e6;
+      --bg-parchment-deep: #e8ddc7;
+      --ink-main: #3f3326;
+      --ink-muted: #6a5b4a;
+      --accent: #b58b57;
+      --accent-soft: rgba(181, 139, 87, 0.25);
+      --max-width: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Playfair Display", serif;
+      background:
+        radial-gradient(circle at top left, rgba(0,0,0,0.1), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(0,0,0,0.15), transparent 60%),
+        linear-gradient(135deg, #f9f2e8, #f1e6d3);
+      /* parchment-style layered gradients inspired by paper-effect techniques [web:1][web:8] */
+      color: var(--ink-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0 1rem;
+    }
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      background: var(--bg-parchment);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.05),
+        0 18px 45px rgba(0,0,0,0.28);
+      position: relative;
+      padding-bottom: 4rem;
+      margin-top: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Slight irregular edge to mimic aged paper border [web:2][web:11] */
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at top, rgba(0,0,0,0.15), transparent 55%),
+        radial-gradient(circle at bottom, rgba(0,0,0,0.25), transparent 60%);
+      mix-blend-mode: multiply;
+      opacity: 0.35;
+      border-radius: 6px;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    /* ----------
+       Header + Navbar + Logo slot
+       ---------- */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .nav-wrapper {
+      backdrop-filter: blur(6px);
+      background: linear-gradient(
+        to bottom,
+        rgba(245, 240, 230, 0.9),
+        rgba(245, 240, 230, 0.7)
+      );
+      border-bottom: 1px solid rgba(63,51,38,0.14);
+      padding: 0.4rem 1.5rem;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    /* Placeholder for future logo (yellow circle + black icon/text) */
+    .logo-slot {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-width: 120px;
+    }
+
+    /* Circular marker to roughly echo your planned logo’s yellow disc */
+    .logo-placeholder {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px dashed rgba(0,0,0,0.25);
+      background: radial-gradient(circle at 30% 20%, #ffe373, #f1c248);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #2b241c;
+      font-weight: 600;
+    }
+
+    .logo-text {
+      font-family: "Great Vibes", cursive;
+      font-size: 1.8rem;
+      letter-spacing: 0.04em;
+      color: var(--ink-main);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-muted);
+      position: relative;
+      padding-bottom: 0.1rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ----------
+       Hero Slider
+       ---------- */
+
+    .hero {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero-copy {
+      padding-right: 0.5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-sub {
+      font-size: 0.98rem;
+      max-width: 420px;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero-note {
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ink-muted);
+    }
+
+    .hero-slider-shell {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.08),
+        0 18px 40px rgba(0,0,0,0.25);
+      background: var(--bg-parchment-deep);
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero-slider-inner {
+      display: flex;
+      width: 300%;
+      transform: translateX(0%);
+      transition: transform 1s ease-in-out;
+    }
+
+    .hero-card {
+      flex: 0 0 100%;
+      padding: 1.4rem 1.6rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    /* Image placeholder: use background images later for real shots */
+    .hero-image {
+      border-radius: 8px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 180px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 0.7rem;
+    }
+
+    /* Subtle grain overlay for photos to keep vintage mood [web:3][web:4] */
+    .hero-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 0 0, rgba(0,0,0,0.18), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(0,0,0,0.14), transparent 55%),
+        radial-gradient(circle at 0 100%, rgba(0,0,0,0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(0,0,0,0.18), transparent 55%);
+      mix-blend-mode: soft-light;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    .hero-label {
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+      background: rgba(245,240,230,0.85);
+      padding: 0.2rem 0.6rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-main);
+    }
+
+    .hero-card h3 {
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-card p {
+      font-size: 0.92rem;
+      color: var(--ink-muted);
+    }
+
+    /* ---------- 
+       Weekend Popup Section
+       ---------- */
+
+    .section {
+      margin-top: 2.6rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 0.25rem;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 60%;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .popup-card {
+      background: linear-gradient(
+        135deg,
+        #f6efe2,
+        #efe3cf
+      );
+      border-radius: 10px;
+      border: 1px solid rgba(63,51,38,0.18);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.22);
+      padding: 1.4rem 1.3rem 1.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 4fr);
+      gap: 1.3rem;
+      position: relative;
+    }
+
+    .popup-card::before {
+      content: "";
+      position: absolute;
+      inset: 12px 10px;
+      border: 1px dashed rgba(63,51,38,0.20);
+      pointer-events: none;
+    }
+
+    .popup-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .popup-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .popup-where {
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .popup-meta {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .popup-pin-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+      font-size: 0.9rem;
+      color: var(--ink-main);
+    }
+
+    .popup-pin {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .popup-note {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      margin-top: 0.75rem;
+    }
+
+    .popup-map {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 0 0, rgba(0,0,0,0.15), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(0,0,0,0.18), transparent 55%),
+        #dfd3bc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      text-align: center;
+    }
+
+    .popup-map-inner {
+      border-radius: 6px;
+      background: rgba(245,240,230,0.9);
+      border: 1px solid rgba(63,51,38,0.18);
+      padding: 0.6rem 0.8rem;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ----------
+       Footer
+       ---------- */
+
+    footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 2.5rem;
+      padding: 1.4rem 1.5rem 0.6rem;
+      border-top: 1px solid rgba(63,51,38,0.18);
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -12px;
+      height: 22px;
+      background:
+        radial-gradient(circle at 0 100%, rgba(0,0,0,0.25), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(0,0,0,0.25), transparent 55%);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      flex-wrap: wrap;
+    }
+
+    .footer-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.8rem;
+      align-items: center;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .footer-right a {
+      color: var(--ink-main);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    .icon-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(63,51,38,0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      background: var(--accent-soft);
+    }
+
+    /* ----------
+       Responsive tweaks
+       ---------- */
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        order: 2;
+        padding-right: 0;
+      }
+
+      .hero-slider-shell {
+        order: 1;
+      }
+
+      .popup-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-wrapper {
+        padding-inline: 1rem;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .logo-slot {
+        margin-bottom: 0.5rem;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+        gap: 0.7rem;
+        font-size: 0.85rem;
+      }
+
+      main {
+        padding-inline: 1rem;
+      }
+
+      .popup-card {
+        padding: 1.1rem 1rem 1.2rem;
+      }
+
+      footer {
+        padding-inline: 1rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header + Navbar with logo placeholder -->
+    <header>
+      <div class="nav-wrapper">
+        <nav>
+          <div class="logo-slot">
+            <!-- Replace this placeholder block with your actual logo image later -->
+            <!-- Example: <img src="logo.svg" alt="Baker7 logo" class="logo-img"> -->
+            <div class="logo-placeholder">B7</div>
+            <div class="logo-text">Baker7</div>
+          </div>
+          <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#breads">Our Breads</a>
+            <a href="#pastries">Pastries</a>
+            <a href="#popup">Weekend Popup</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero section with slow horizontal slider -->
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <div class="hero-eyebrow">Artisanal French bakery</div>
+          <h1 class="hero-title">Hand‑crafted loaves and quiet morning pastries.</h1>
+          <p class="hero-sub">
+            Each batch at Baker7 is small, slow‑fermented, and baked with stone‑milled flours, French butter, and a touch of old‑world patience.
+          </p>
+          <div class="hero-note">
+            Rotating weekend menu • Limited micro‑batches
+          </div>
+        </div>
+
+        <div class="hero-slider-shell" aria-label="Featured pastries">
+          <div class="hero-slider-inner" id="heroSlider">
+            <!-- Slide 1 -->
+            <article class="hero-card">
+              <div class="hero-image" style="background-image: url('https://images.pexels.com/photos/2135/bread-food-healthy-breakfast.jpg?auto=compress&cs=tinysrgb&w=1200');">
+                <div class="hero-label">Levain Maison</div>
+              </div>
+              <h3>Country Sourdough</h3>
+              <p>
+                Three‑day levain with crackling crust and a custardy crumb, baked dark for a whisper of caramel and smoke.
+              </p>
+            </article>
+
+            <!-- Slide 2 -->
+            <article class="hero-card">
+              <div class="hero-image" style="background-image: url('https://images.pexels.com/photos/209550/pexels-photo-209550.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+                <div class="hero-label">Beurre &amp; Feuilles</div>
+              </div>
+              <h3>Morning Croissant</h3>
+              <p>
+                Classic French croissant, patiently laminated in small batches for paper‑thin layers that shatter at first bite.
+              </p>
+            </article>
+
+            <!-- Slide 3 -->
+            <article class="hero-card">
+              <div class="hero-image" style="background-image: url('https://images.pexels.com/photos/1838596/pexels-photo-1838596.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+                <div class="hero-label">Brioche du Weekend</div>
+              </div>
+              <h3>Vanilla Brioche Knot</h3>
+              <p>
+                Soft, enriched dough scented with real vanilla, gently twisted and brushed with brown‑sugar butter.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Weekend Popup section -->
+      <section class="section" id="popup">
+        <h2 class="section-title">Weekend Popup</h2>
+
+        <div class="popup-card">
+          <div class="popup-copy">
+            <div class="popup-eyebrow">Next stop</div>
+            <div class="popup-where">Old Town Courtyard, Sunday Mornings</div>
+            <div class="popup-meta">
+              Serving from 8:00–11:30 a.m. while the rack stays warm. Pre‑orders open every Friday at 6:00 p.m.
+            </div>
+
+            <div class="popup-pin-line">
+              <span class="popup-pin">📍</span>
+              <span>
+                Courtyard Lane, Kolar Road, Bhopal<br>
+                Follow the scent of freshly baked sourdough and butter.
+              </span>
+            </div>
+
+            <p class="popup-note">
+              Add a Google Map iframe into the map placeholder on the right when you are ready to go live.
+            </p>
+          </div>
+
+          <div class="popup-map" aria-label="Map placeholder">
+            <div class="popup-map-inner">
+              <!-- Map placeholder – replace with Google Maps embed iframe later -->
+              <!-- Example:
+              <iframe
+                src="https://www.google.com/maps/embed?pb=..."
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+              -->
+              Map coming soon – Google Maps embed will sit neatly here.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Simple anchors for other nav items; you can build them out later -->
+      <section class="section" id="breads">
+        <h2 class="section-title">Our Breads</h2>
+        <p style="margin-top:0.7rem;font-size:0.92rem;color:var(--ink-muted);max-width:600px;">
+          Naturally leavened loaves, long‑fermented baguettes, and seasonal grains baked in small, carefully watched batches.
+        </p>
+      </section>
+
+      <section class="section" id="pastries">
+        <h2 class="section-title">Pastries</h2>
+        <p style="margin-top:0.7rem;font-size:0.92rem;color:var(--ink-muted);max-width:600px;">
+          Butter‑rich croissants, flaky kouign‑amann, and softly sweet brioche inspired by rustic French boulangeries.
+        </p>
+      </section>
+
+      <section class="section" id="contact">
+        <h2 class="section-title">Contact</h2>
+        <p style="margin-top:0.7rem;font-size:0.92rem;color:var(--ink-muted);max-width:600px;">
+          For pre‑orders, collaborations, or wholesale enquiries, write to <a href="mailto:hello@baker7.co" style="color:var(--ink-main);text-decoration:none;border-bottom:1px dotted var(--accent);">hello@baker7.co</a>.
+        </p>
+      </section>
+
+      <!-- Footer with Instagram + RSS -->
+      <footer>
+        <div class="footer-inner">
+          <div class="footer-left">
+            <span>© <span id="yearSpan"></span> Baker7 Micro‑Bakery.</span>
+            <span>Small‑batch, weekend‑only bakes.</span>
+          </div>
+          <div class="footer-right">
+            <a href="https://instagram.com" target="_blank" rel="noopener">
+              <span class="icon-circle">◎</span>
+              <span>Instagram</span>
+            </a>
+            <a href="/feed.xml">
+              <span class="icon-circle">Ʀ</span>
+              <span>RSS</span>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </main>
   </div>
-</section>
 
-{% include components/products.html %}
+  <script>
+    // ---------------------
+    // Hero slider: gentle auto pan between 3 slides
+    // ---------------------
+    (function () {
+      const slider = document.getElementById("heroSlider");
+      const totalSlides = 3;
+      let currentIndex = 0;
 
-<section class="about" id="about">
-  <h2>Our Story</h2>
-  <p>At Baker 7, baking is more than a skill — it’s a heartfelt tradition. From our humble beginnings to a neighborhood favorite, we’ve remained committed to quality, creativity, and a personal touch in every product we bake.</p>
-</section>
+      function goToSlide(index) {
+        const offset = -index * 100;
+        slider.style.transform = "translateX(" + offset + "%)";
+      }
 
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        goToSlide(currentIndex);
+      }
 
+      // Slow interval for calm, recipe‑page feel
+      setInterval(nextSlide, 6000);
+    })();
 
-<section class="contact" id="contact">
-  <h2>Contact Us</h2>
-  <p>Want to place an order or know more about our offerings? Drop us a message!</p>
-  <form id="contactForm">
-    <input type="text" placeholder="Your Name" required />
-    <input type="email" placeholder="Your Email" required />
-    <textarea placeholder="Your Message" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
-</section>
+    // ---------------------
+    // Footer year
+    // ---------------------
+    (function () {
+      const yearSpan = document.getElementById("yearSpan");
+      yearSpan.textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
