@@ -213,6 +213,25 @@
       letter-spacing: 0.18em;
       color: var(--ink-muted);
     }
+    
+    .hero-track-wrapper {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.6rem 0 0.2rem;
+      margin: 0 -0.2rem;
+      scroll-snap-type: x mandatory;
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .hero-track-wrapper::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .hero-track-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.15);
+      border-radius: 999px;
+    }
 
     .hero-slider-shell {
       border-radius: 10px;
@@ -233,38 +252,42 @@
     }
 
     .hero-card {
-      flex: 0 0 100%;
-      padding: 1.4rem 1.6rem 1.6rem;
+      flex: 0 0 78%;
+      max-width: 78%;
+      scroll-snap-align: center;
+      background: linear-gradient(145deg, #f9f1e4, #f0dfc0);
+      border-radius: 0.35rem;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.06),
+        2px 3px 10px rgba(0,0,0,0.25);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
     }
 
     /* Image placeholder: use background images later for real shots */
     .hero-image {
-      border-radius: 8px;
+      height: 160px;
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
-      min-height: 180px;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 0.7rem;
+      filter: saturate(0.86) contrast(0.96);
     }
 
-    /* Subtle grain overlay for photos to keep vintage mood [web:3][web:4] */
-    .hero-image::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 0 0, rgba(0,0,0,0.18), transparent 55%),
-        radial-gradient(circle at 100% 0, rgba(0,0,0,0.14), transparent 55%),
-        radial-gradient(circle at 0 100%, rgba(0,0,0,0.16), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(0,0,0,0.18), transparent 55%);
-      mix-blend-mode: soft-light;
-      opacity: 0.28;
-      pointer-events: none;
+    .hero-content {
+      padding: 0.75rem 0.8rem 0.85rem;
+    }
+
+    .hero-title {
+      font-family: "Old Standard TT", serif;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-desc {
+      font-size: 0.8rem;
+      color: var(--ink);
     }
 
     .hero-label {
@@ -277,17 +300,6 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--ink-main);
-    }
-
-    .hero-card h3 {
-      font-size: 1.25rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .hero-card p {
-      font-size: 0.92rem;
-      color: var(--ink-muted);
     }
 
     /* ---------- 
@@ -544,6 +556,56 @@
         align-items: flex-start;
       }
     }
+    @media (min-width: 440px) {
+      .hero-card {
+        flex-basis: 260px;
+        max-width: 260px;
+      }
+      .hero-track-wrapper {
+        overflow-x: hidden;
+        margin: 0;
+      }
+
+      /* soft auto-scroll on desktop / tablet */
+      .hero-track-wrapper {
+        position: relative;
+      }
+
+      .hero-track-wrapper .hero-track {
+        display: flex;
+        gap: 1.4rem;
+        animation: scrollHero 24s linear infinite;
+      }
+      @keyframes scrollHero {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+    }
+    .logo-img {
+  /* Ensure width and height are equal */
+  width: 100px;
+  height: 100px;
+
+  /* Make it circular */
+  border-radius: 50%;
+
+  /* Keep image from stretching/stretching */
+  object-fit: cover;
+
+  /* Optional: adds a border or shadow */
+  /* border: 2px solid #ccc; */
+}
+
+/* Example Responsive Adjustments */
+/* @media (max-width: 600px) {
+  .logo-img {
+    width: 60px;
+    height: 60px;
+  }
+} */
+
+    
   </style>
 </head>
 <body>
@@ -554,8 +616,9 @@
         <nav>
           <div class="logo-slot">
             <!-- Replace this placeholder block with your actual logo image later -->
-            <!-- Example: <img src="logo.svg" alt="Baker7 logo" class="logo-img"> -->
-            <div class="logo-placeholder">B7</div>
+            <img src="site_logo_nobg.svg" alt="Baker7 logo" class="logo-img">
+            <!-- <img src="site_logo_nobg.png" alt="Baker7 logo" class="logo-img"> -->
+            <!-- <div class="logo-placeholder">B7</div> -->
             <div class="logo-text">Baker7</div>
           </div>
           <div class="nav-links">
@@ -583,39 +646,42 @@
           </div>
         </div>
 
-        <div class="hero-slider-shell" aria-label="Featured pastries">
-          <div class="hero-slider-inner" id="heroSlider">
-            <!-- Slide 1 -->
+        <div class="hero-track-wrapper">
+          <!-- For desktop animation, we wrap cards in this inner track -->
+          <div class="hero-track">
+            <!-- Card 1 -->
             <article class="hero-card">
-              <div class="hero-image" style="background-image: url('https://images.pexels.com/photos/2135/bread-food-healthy-breakfast.jpg?auto=compress&cs=tinysrgb&w=1200');">
-                <div class="hero-label">Levain Maison</div>
+              <div class="hero-image" style="background-image:url('https://images.pexels.com/photos/2434/bread-food-healthy-breakfast.jpg?auto=compress&cs=tinysrgb&w=800');"></div>
+              <div class="hero-content">
+                <div class="hero-title">Country Sourdough</div>
+                <p class="hero-desc">
+                  36‑hour fermented loaf with blistered crust and an open, custardy crumb.
+                  Baked on stone, scored by hand each dawn.
+                </p>
               </div>
-              <h3>Country Sourdough</h3>
-              <p>
-                Three‑day levain with crackling crust and a custardy crumb, baked dark for a whisper of caramel and smoke.
-              </p>
+            </article>
+            <!-- Card 2 -->
+            <article class="hero-card">
+              <div class="hero-image" style="background-image:url('https://images.pexels.com/photos/6537669/pexels-photo-6537669.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+              <div class="hero-content">
+                <div class="hero-title">Brittany Butter Croissant</div>
+                <p class="hero-desc">
+                  Crisp, shattering layers wrapped around a tender heart, laminated with
+                  cultured butter and a whisper of malt.
+                </p>
+              </div>
             </article>
 
-            <!-- Slide 2 -->
+            <!-- Card 3 -->
             <article class="hero-card">
-              <div class="hero-image" style="background-image: url('https://images.pexels.com/photos/209550/pexels-photo-209550.jpeg?auto=compress&cs=tinysrgb&w=1200');">
-                <div class="hero-label">Beurre &amp; Feuilles</div>
+              <div class="hero-image" style="background-image:url('https://images.pexels.com/photos/1028714/pexels-photo-1028714.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+              <div class="hero-content">
+                <div class="hero-title">Roasted Walnut Levain</div>
+                <p class="hero-desc">
+                  Mildly tangy crumb studded with toasted walnuts, ideal with salted butter,
+                  strong coffee, or a quiet Sunday.
+                </p>
               </div>
-              <h3>Morning Croissant</h3>
-              <p>
-                Classic French croissant, patiently laminated in small batches for paper‑thin layers that shatter at first bite.
-              </p>
-            </article>
-
-            <!-- Slide 3 -->
-            <article class="hero-card">
-              <div class="hero-image" style="background-image: url('https://images.pexels.com/photos/1838596/pexels-photo-1838596.jpeg?auto=compress&cs=tinysrgb&w=1200');">
-                <div class="hero-label">Brioche du Weekend</div>
-              </div>
-              <h3>Vanilla Brioche Knot</h3>
-              <p>
-                Soft, enriched dough scented with real vanilla, gently twisted and brushed with brown‑sugar butter.
-              </p>
             </article>
           </div>
         </div>
@@ -712,34 +778,31 @@
 
   <script>
     // ---------------------
-    // Hero slider: gentle auto pan between 3 slides
-    // ---------------------
-    (function () {
-      const slider = document.getElementById("heroSlider");
-      const totalSlides = 3;
-      let currentIndex = 0;
-
-      function goToSlide(index) {
-        const offset = -index * 100;
-        slider.style.transform = "translateX(" + offset + "%)";
-      }
-
-      function nextSlide() {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        goToSlide(currentIndex);
-      }
-
-      // Slow interval for calm, recipe‑page feel
-      setInterval(nextSlide, 6000);
-    })();
-
-    // ---------------------
     // Footer year
     // ---------------------
     (function () {
       const yearSpan = document.getElementById("yearSpan");
       yearSpan.textContent = new Date().getFullYear();
     })();
+
+    // Optional: pause desktop auto-scroll on hover (only applies when animation is active)
+    const mqDesktop = window.matchMedia("(min-width: 640px)");
+    const track = document.querySelector(".hero-track");
+
+    function setHover() {
+      if (!mqDesktop.matches || !track) return;
+      track.addEventListener("mouseenter", () => {
+        track.style.animationPlayState = "paused";
+      });
+      track.addEventListener("mouseleave", () => {
+        track.style.animationPlayState = "running";
+      });
+    }
+
+    if (mqDesktop.matches) setHover();
+    mqDesktop.addEventListener("change", (e) => {
+      if (e.matches) setHover();
+    });
   </script>
 </body>
 </html>
